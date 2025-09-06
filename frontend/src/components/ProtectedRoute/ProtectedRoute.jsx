@@ -7,17 +7,26 @@ export default function ProtectedRoute({ children }) {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
-    API.get('/api/auth/me', { withCredentials: true })
+    let isMounted = true;
+    API.get('/api/auth/me')
       .then((res) => {
         console.log("✅ Auth success:", res.data);
-        setAuth(true);
+        if (isMounted) setAuth(true);
       })
       .catch((err) => {
         console.warn("❌ Auth failed:", err.response?.data || err.message);
-        setAuth(false);
+        if (isMounted) setAuth(false);
       });
+    return () => { isMounted = false; };
   }, []);
 
-  if (auth === null) return <div>Checking authentication...</div>;
-  return auth ? children : <Navigate to="/login" />;
+  if (auth === null) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-gray-600">Checking authentication...</p>
+      </div>
+    );
+  }
+
+  return auth ? children : <Navigate to="/login" replace />;
 }

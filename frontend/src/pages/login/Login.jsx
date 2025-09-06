@@ -38,7 +38,6 @@ export default function Login() {
     if (!isLogin && !validatePassword(password))
       return setError('❌ Password must include uppercase, lowercase, number, and symbol');
 
-    console.log("🟢 Form submitted");
 
     setLoading(true);
 
