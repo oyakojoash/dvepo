@@ -1,0 +1,80 @@
+
+.vendor-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 3rem;
+  background: linear-gradient(to right, #f0f4f8, #ffffff);
+  border-bottom: 2px solid #d1d5db;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Circular vendor logo */
+.vendor-banner-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #3b82f6; /* Blue accent */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Vendor info container */
+.vendor-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Vendor name */
+.vendor-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: #1f2937; /* gray-800 */
+}
+
+/* Vendor description */
+.vendor-header p {
+  font-size: 1rem;
+  color: #4b5563; /* gray-600 */
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* --- Product grid below header --- */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
+  padding: 2rem 3rem;
+  background: #f9fafb;
+}
+
+/* Optional link wrapper around vendor info in Product cards */
+.vendor-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #1d4ed8; /* blue-700 */
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.vendor-link:hover {
+  color: #2563eb; /* blue-600 */
+}
+
+.vendor-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.15s ease;
+}
+
+.vendor-link:hover .vendor-logo {
+  transform: scale(1.1);
+}

@@ -1,0 +1,28 @@
+.checkout-page {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.checkout-items {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.checkout-items li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+button {
+  padding: 10px 16px;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

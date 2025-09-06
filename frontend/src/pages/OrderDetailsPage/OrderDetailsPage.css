@@ -1,0 +1,31 @@
+.order-details-page {
+  max-width: 700px;
+  margin: auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.order-products {
+  list-style: none;
+  padding: 0;
+}
+
+.order-products li {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.cancel-order-btn {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background-color: crimson;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
