@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 10000;
 
 // ✅ Allowed origins (Render + local dev)
 const allowedOrigins = [
-  'https://devpo1-frontend.onrender.com', // your deployed frontend
-  'http://localhost:3000',                // local dev
+  'https://dvepo-2.onrender.com', // ✅ your Render frontend
+  'http://localhost:3000', 
 ];
 
 // ✅ CORS setup
