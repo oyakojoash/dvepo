@@ -1,10 +1,11 @@
- const express = require('express');
+const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 
 dotenv.config();
 const app = express();
@@ -12,8 +13,8 @@ const PORT = process.env.PORT || 10000;
 
 // ✅ Allowed origins (Render + local dev)
 const allowedOrigins = [
-  'https://dvepo-2.onrender.com', // ✅ your Render frontend
-  'http://localhost:3000', 
+  'https://dvepo-2.onrender.com', // ✅ Render frontend
+  'http://localhost:3000',
 ];
 
 // ✅ CORS setup
@@ -42,7 +43,7 @@ app.use(cookieParser());
 // ✅ Connect DB
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI); // Mongoose v6+
+    await mongoose.connect(process.env.MONGO_URI);
     console.log('✅ MongoDB connected');
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error.message);
@@ -62,17 +63,15 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
-// ✅ Root test route
-app.get('/', (req, res) => {
-  res.send('🚀 API is running on Render...');
+// ✅ Serve React frontend build
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+// ✅ Catch-all route to serve React for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 
-// ✅ 404 handler
-app.use((req, res, next) => {
-  res.status(404).json({ error: '❌ Route not found' });
-});
-
-// ✅ Error handler
+// ✅ Error handler (keep after all routes)
 app.use((err, req, res, next) => {
   console.error('❌ Server error:', err.stack || err.message || err);
   res.status(err.status || 500).json({ error: err.message || 'Internal server error' });

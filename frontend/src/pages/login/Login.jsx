@@ -44,13 +44,12 @@ export default function Login() {
     const url = isLogin ? '/api/auth/login' : '/api/auth/register';
     const payload = isLogin ? { email, password } : { fullName, email, password, phone };
 
-     console.log("🔍 isLogin:", isLogin);
-  console.log("📤 URL to send:", url);
-  console.log("📦 Payload:", payload);
+    
 
     try {
       const { data } = await API.post(url, payload, { withCredentials: true });
       if (isLogin) {
+        
         setSuccess('✅ Login successful!');
         navigate('/account');
       } else {

@@ -11,6 +11,7 @@ export default function ProtectedRoute({ children }) {
     API.get('/api/auth/me')
       .then((res) => {
         console.log("✅ Auth success:", res.data);
+        console.log(auth);
         if (isMounted) setAuth(true);
       })
       .catch((err) => {
