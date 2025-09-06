@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 
 dotenv.config();
 const app = express();
@@ -12,8 +13,8 @@ const PORT = process.env.PORT || 10000;
 
 // ✅ Allowed origins (Render + local dev)
 const allowedOrigins = [
-  'https://dvepo-2.onrender.com', // ✅ your Render frontend
-  'http://localhost:3000', 
+  'https://dvepo-2.onrender.com', // ✅ your deployed frontend/backend
+  'http://localhost:3000',        // ✅ local dev
 ];
 
 // ✅ CORS setup
@@ -51,7 +52,7 @@ const connectDB = async () => {
 };
 connectDB();
 
-// ✅ Routes
+// ✅ API Routes
 const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cart');
 const authRoutes = require('./routes/auth');
@@ -62,14 +63,26 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 
-// ✅ Root test route
-app.get('/', (req, res) => {
-  res.send('🚀 API is running on Render...');
-});
+// ✅ Serve React frontend (build folder)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
+} else {
+  // Dev root test
+  app.get('/', (req, res) => {
+    res.send('🚀 API is running in development mode...');
+  });
+}
 
-// ✅ 404 handler
+// ✅ 404 handler (only for API, React handled above)
 app.use((req, res, next) => {
-  res.status(404).json({ error: '❌ Route not found' });
+  if (req.originalUrl.startsWith('/api')) {
+    res.status(404).json({ error: '❌ API route not found' });
+  } else {
+    next();
+  }
 });
 
 // ✅ Error handler
