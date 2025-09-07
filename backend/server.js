@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 10000;
 
 // ✅ Allowed origins (Render + local dev)
 const allowedOrigins = [
-  'https://dvepo-2.onrender.com', // ✅ Render frontend
+  'https://dvepo-2.onrender.com', // Render frontend
   'http://localhost:3000',
 ];
 
@@ -28,7 +28,7 @@ app.use(
         return callback(new Error('❌ CORS not allowed'));
       }
     },
-    credentials: true, // ✅ critical: allows cookies
+    credentials: true, // allows cookies
   })
 );
 
@@ -57,21 +57,21 @@ const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cart');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const vendorRoutes = require('./routes/vendorRoutes');
 
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/vendors', vendorRoutes);
 
 // ✅ Serve React frontend build
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-
-// ✅ Catch-all route (safe for Express + Node 22)
-app.get('*', (req, res) => {
+// ✅ Catch-all route (safe for Express 5 + Node 22)
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
-
 
 // ✅ Error handler (keep after all routes)
 app.use((err, req, res, next) => {
