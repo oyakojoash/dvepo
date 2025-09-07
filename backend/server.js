@@ -66,10 +66,12 @@ app.use('/api/users', userRoutes);
 // ✅ Serve React frontend build
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-// ✅ Catch-all route to serve React for client-side routing
-app.get('*', (req, res) => {
+
+// ✅ Catch-all route (safe for Express + Node 22)
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
+
 
 // ✅ Error handler (keep after all routes)
 app.use((err, req, res, next) => {
