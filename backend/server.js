@@ -65,18 +65,22 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/vendors', vendorRoutes);
 
-// ✅ Serve React frontend build
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+// ✅ Serve React frontend build (copied into backend/build by Render)
+const buildPath = path.join(__dirname, 'build');
+app.use(express.static(buildPath));
 
-// ✅ Catch-all route (safe for Express 5 + Node 22)
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+// ✅ Catch-all: send index.html for non-API routes
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next(); // don’t interfere with API routes
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 // ✅ Error handler (keep after all routes)
 app.use((err, req, res, next) => {
   console.error('❌ Server error:', err.stack || err.message || err);
-  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
+  res
+    .status(err.status || 500)
+    .json({ error: err.message || 'Internal server error' });
 });
 
 // ✅ Graceful shutdown
