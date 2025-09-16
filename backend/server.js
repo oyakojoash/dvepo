@@ -69,11 +69,12 @@ app.use('/api/vendors', vendorRoutes);
 const buildPath = path.join(__dirname, 'build');
 app.use(express.static(buildPath));
 
-// ✅ Catch-all: send index.html for non-API routes
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) return next(); // don’t interfere with API routes
+// ✅ Catch-all: send index.html for non-API routes (Express 5 fix)
+app.get(/.*/, (req, res, next) => {
+  if (req.path.startsWith('/api')) return next(); 
   res.sendFile(path.join(buildPath, 'index.html'));
 });
+
 
 // ✅ Error handler (keep after all routes)
 app.use((err, req, res, next) => {
