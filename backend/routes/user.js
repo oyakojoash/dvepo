@@ -9,7 +9,7 @@ const router = express.Router();
  * @desc    Get logged-in user's profile
  * @access  Private
  */
-router.get('/me', protect, userCtrl.getProfile);
+router.get('/me', protect, userCtrl.getUser); // 🔥 fixed name to match controller
 
 /**
  * @route   PUT /api/users/me
