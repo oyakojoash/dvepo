@@ -13,7 +13,8 @@ const PORT = process.env.PORT || 10000;
 
 // ✅ Allowed origins (Render + local dev)
 const allowedOrigins = [
-  'https://dvepo-2.onrender.com', // Render frontend
+  'https://dvepo-2.onrender.com', 
+  'https://dvepo.netlify.app',
   'http://localhost:3000',
 ];
 
